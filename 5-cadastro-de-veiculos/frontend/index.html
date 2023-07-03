@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Veículos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        .json-response {
+            margin-top: 10px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+            max-height: 450px;
+            font-family: monospace;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-5">Gerenciamento de Veículos</h1>
+
+        <h2 class="mt-5">Consultar veículos</h2>
+        <button class="btn btn-primary" onclick="consultarVeiculos()">Consultar</button>
+        <p id="consultaResultado"></p>
+
+        <h2 class="mt-5">Filtrar Veículos</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="marca">Marca:</label>
+                <select class="form-select" id="marca">
+                    <option value="">Todas</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Lamborghini">Lamborghini</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Maserati">Maserati</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Jeep">Jeep</option>
+                    <option value="Land Rover">Land Rover</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="ano">Ano:</label>
+                <input class="form-control" type="text" id="ano">
+            </div>
+            <div class="col-md-4">
+                <label for="cor">Cor:</label>
+                <input class="form-control" type="text" id="cor">
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="filtrarVeiculos()">Filtrar</button>
+        <p id="filtragemResultado"></p>
+
+        <h2 class="mt-5">Consultar Detalhes do Veículo</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="idDetalhes">ID:</label>
+                <input class="form-control" type="text" id="idDetalhes">
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="consultarDetalhesVeiculo()">Consultar Detalhes</button>
+        <p id="detalhesResultado"></p>
+
+        <h2 class="mt-5">Cadastrar Veículo</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="veiculo">Veículo:</label>
+                <input class="form-control" type="text" id="veiculo">
+            </div>
+            <div class="col-md-4">
+                <label for="novaMarca">Marca:</label>
+                <select class="form-select" id="novaMarca">
+                    <option value="">Selecione</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Lamborghini">Lamborghini</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Maserati">Maserati</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Jeep">Jeep</option>
+                    <option value="Land Rover">Land Rover</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="novoAno">Ano:</label>
+                <input class="form-control" type="text" id="novoAno">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="novaCor">Cor:</label>
+                <input class="form-control" type="text" id="novaCor">
+            </div>
+            <div class="col-md-4">
+                <label for="descricao">Descrição:</label>
+                <input class="form-control" id="descricao"></input>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="cadastrarVeiculo()">Cadastrar</button>
+        <p id="cadastroResultado"></p>
+
+        <h2 class="mt-5">Atualizar Veículo</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="idAtualizacao">ID:</label>
+                <input class="form-control" type="text" id="idAtualizacao">
+            </div>
+            <div class="col-md-4">
+                <label for="veiculoAtualizacao">Veículo:</label>
+                <input class="form-control" type="text" id="veiculoAtualizacao">
+            </div>
+            <div class="col-md-4">
+                <label for="marcaAtualizacao">Marca:</label>
+                <select class="form-select" id="marcaAtualizacao">
+                    <option value="">Selecione</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Lamborghini">Lamborghini</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Maserati">Maserati</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Jeep">Jeep</option>
+                    <option value="Land Rover">Land Rover</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="anoAtualizacao">Ano:</label>
+                <input class="form-control" type="text" id="anoAtualizacao">
+            </div>
+            <div class="col-md-4">
+                <label for="corAtualizacao">Cor:</label>
+                <input class="form-control" type="text" id="corAtualizacao">
+            </div>
+            <div class="col-md-4">
+                <label for="descricaoAtualizacao">Descrição:</label>
+                <input class="form-control" id="descricaoAtualizacao"></input>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="atualizarVeiculo()">Atualizar</button>
+        <p id="atualizacaoResultado"></p>
+
+        <h2 class="mt-5">Atualizar Campo 'Vendido'</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="idVendido">ID:</label>
+                <input class="form-control" type="text" id="idVendido">
+            </div>
+            <div class="col-md-4">
+                <label for="vendido">Vendido:</label>
+                <select class="form-select" id="vendido">
+                    <option value="True">Sim</option>
+                    <option value="False">Não</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="atualizarCampoVendido()">Atualizar</button>
+        <p id="campoVendidoResultado"></p>
+
+        <h2 class="mt-5">Excluir Veículo</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="idExclusao">ID:</label>
+                <input class="form-control" type="text" id="idExclusao">
+            </div>
+        </div>
+        <button class="btn btn-danger mt-3" onclick="excluirVeiculo()">Excluir</button>
+        <p id="exclusaoResultado"></p>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+</body>
+
+</html>
